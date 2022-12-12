@@ -11,5 +11,6 @@ from django.contrib.postgres.fields import JSONField
 
 class Quiz_API(models.Model):
     question = models.CharField(max_length=100, default='')
+    q_type = models.IntegerField(default=1)
     answers = models.JSONField(default=dict)
     validation = models.BooleanField(default=False)

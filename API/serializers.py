@@ -9,4 +9,4 @@ class Quiz_APISerializer(serializers.ModelSerializer):
     # initialize fields
     class Meta:
         model = Quiz_API
-        fields = ['id','question', 'answers','validation']
+        fields = ['id',"q_type",'question', 'answers','validation']
