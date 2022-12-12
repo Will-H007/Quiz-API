@@ -19,9 +19,12 @@ def Quiz_API_list(request, answer = None):
     """
     # User requesting quiz
     if request.method == 'GET':
-        quiz = Quiz_API.objects.filter(validation=False)  
-        serializer = Quiz_APISerializer(quiz, many=True)
-        return JsonResponse(choice(serializer.data), safe=False)
+        quizs = Quiz_API.objects.filter(validation=False)  
+        serializer = Quiz_APISerializer(quizs, many=True)
+        quiz = choice(serializer.data)
+        quiz['answers'] = dict.fromkeys(quiz['answers'],False)
+
+        return JsonResponse(quiz, safe=False)
 
         
     # Uploading data to the database
