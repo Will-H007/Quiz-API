@@ -1,0 +1,24 @@
+[
+    {
+        "question": "Generally speaking, how many ears do human have?",
+        "answers":{
+            "5": false,
+            "1":false,
+            "2":true,
+            "10":false
+        },
+        "validation": false
+        
+    },
+    {
+        "question": "what are the possible days in a year?",
+        "answers":{
+            "265":false,
+            "365":true,
+            "366":true,
+            "278":false
+        },
+        "validation": false
+    }
+   
+]
