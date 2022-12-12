@@ -23,7 +23,7 @@ def Quiz_API_list(request, answer = None):
         serializer = Quiz_APISerializer(quizs, many=True)
         quiz = choice(serializer.data)
         quiz['answers'] = dict.fromkeys(quiz['answers'],False)
-
+        print(quiz)
         return JsonResponse(quiz, safe=False)
 
         
@@ -39,14 +39,13 @@ def Quiz_API_list(request, answer = None):
 
 
 
-    # Modifying the validation of the quiz if the user gets the answer correctly so that the user won't get the same question again
+    # Replying to the user regarding whether they got the answer correct or not
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
         serializer = Quiz_APISerializer(data=data) 
         instances = Quiz_API.objects.filter(id = data['id']).first()
         if serializer.is_valid():
             if instances.answers == serializer.data['answers']:
-                serializer.data['validation'] = True
                 serializer.update(instance = instances, validated_data=serializer.data)
                 text =  confirmation("Congrates! You got it right!")
                 return JsonResponse(text, status=201)
