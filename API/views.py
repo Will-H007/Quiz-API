@@ -23,7 +23,6 @@ def Quiz_API_list(request, answer = None):
         serializer = Quiz_APISerializer(quizs, many=True)
         quiz = choice(serializer.data)
         quiz['answers'] = dict.fromkeys(quiz['answers'],False)
-        print(quiz)
         return JsonResponse(quiz, safe=False)
 
         
@@ -47,7 +46,10 @@ def Quiz_API_list(request, answer = None):
         if serializer.is_valid():
             if instances.answers == serializer.data['answers']:
                 serializer.update(instance = instances, validated_data=serializer.data)
-                text =  confirmation("Congrates! You got it right!")
+                if instances.q_type == 1:
+                    text =  confirmation("Congrates! You got it right! You have earned 2 points")
+                else:
+                    text =  confirmation("Congrates! You got it right! You have earned 3 points")
                 return JsonResponse(text, status=201)
             else:
                 text =  confirmation("Sorry wrong answer!")
