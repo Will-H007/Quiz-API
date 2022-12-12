@@ -11,10 +11,11 @@ for answer in data['answers']:
 
 
 user_answer = input("Your answer: ")
-print("You are right!")
-data['validation'] = True
-r = requests.put("http://127.0.0.1:8000/Quiz_API/", data = json.dumps(data))
-print(r.content)
+if data['answers'][user_answer] == True:    
+    print("You are right!")
+    data['validation'] = True
+    r = requests.put("http://127.0.0.1:8000/Quiz_API/", data = json.dumps(data))
+    print(r.content)
 while data['answers'][user_answer] == False:
     print('Wrong :(, try again')
     user_answer = input("Your answer: ")
