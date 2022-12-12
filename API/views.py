@@ -4,8 +4,13 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from API.models import Quiz_API
 from API.serializers import Quiz_APISerializer
+import json
 from random import choice
 
+def confirmation(text):
+    response = {"message": text}
+    return response
+    
 
 @csrf_exempt
 def Quiz_API_list(request, answer = None):
@@ -25,7 +30,8 @@ def Quiz_API_list(request, answer = None):
         serializer = Quiz_APISerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
+            text =  confirmation("Successfully uploaded")
+            return JsonResponse(text, status=201)
         return JsonResponse(serializer.errors, status=400)
 
 
@@ -39,9 +45,11 @@ def Quiz_API_list(request, answer = None):
             if instances.answers == serializer.data['answers']:
                 serializer.data['validation'] = True
                 serializer.update(instance = instances, validated_data=serializer.data)
-                return HttpResponse("Congrates! You got it right!")
+                text =  confirmation("Congrates! You got it right!")
+                return JsonResponse(text, status=201)
             else:
-                return HttpResponse("Sorry you got it wrong.")
+                text =  confirmation("Sorry wrong answer!")
+                return JsonResponse(text, status=201)
         return JsonResponse(serializer.errors, status=400)
 
 

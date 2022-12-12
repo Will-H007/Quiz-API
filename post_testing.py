@@ -7,5 +7,5 @@ with open(data, 'r') as f:
 
 for quiz in data:
     response = requests.post("http://127.0.0.1:8000/Quiz_API/", data = json.dumps(quiz))
-    print(response.json())
+    print(response.json()['message'])
     
